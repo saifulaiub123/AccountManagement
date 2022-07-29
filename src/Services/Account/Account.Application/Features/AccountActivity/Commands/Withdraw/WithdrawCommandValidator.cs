@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace Account.Application.Features.AccountActivity.Commands.Withdraw
 {
-    public class DepositCommandValidator : AbstractValidator<DepositCommand>
+    public class WithdrawCommandValidator : AbstractValidator<WithdrawCommand>
     {
-        public DepositCommandValidator()
+        public WithdrawCommandValidator()
         {
             RuleFor(x => x.TransactionAmount)
                 .NotNull().WithMessage("Transaction amount is required.");
+               
         }
     }
 }

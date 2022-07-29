@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Account.Application.Features.Orders.Commands.CheckOutOrder;
 using Account.Application.Features.Orders.Commands.DeleteOrder;
-using Account.Application.Features.Orders.Commands.UpdateOrder;
 using Account.Application.Features.Orders.Queries.GetOrderList;
+using Account.Application.Features.AccountActivity.Commands.Withdraw;
 
 namespace Account.Api.Controllers
 {
@@ -30,19 +29,15 @@ namespace Account.Api.Controllers
             return Ok(orders);
         }
 
-        [HttpPost(Name = "Deposit")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [HttpPost("Deposit")]
         public async Task<ActionResult<int>> Deposit([FromBody] DepositCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        [HttpPut(Name = "UpdateOrder")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateOrder([FromBody] UpdateOrderCommand command)
+        [HttpPut(Name = "Withdraw")]
+        public async Task<ActionResult> Withdraw([FromBody] WithdrawCommand command)
         {
             await _mediator.Send(command);
             return NoContent();

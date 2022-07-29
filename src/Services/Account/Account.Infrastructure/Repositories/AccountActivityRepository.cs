@@ -18,12 +18,13 @@ namespace Account.Infrastructure.Repositories
         }
         public async Task Deposit(AccountActivity accountActivity)
         {
-            await _dbContext.AccountActivity.AddAsync(accountActivity);
+            await _dbContext.AddAsync(accountActivity);
             await _dbContext.SaveChangesAsync();
         }
         public async Task Withdraw(AccountActivity accountActivity)
         {
             await _dbContext.AccountActivity.AddAsync(accountActivity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public Task Statement()

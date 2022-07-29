@@ -7,7 +7,7 @@ using Account.Application.Model;
 
 namespace Account.Application.Contracts.Persistence.IService
 {
-    public interface IAcountActivityService
+    public interface IAcountService
     {
         Task Deposit(Amount amount);
         Task Withdraw(Amount amount);

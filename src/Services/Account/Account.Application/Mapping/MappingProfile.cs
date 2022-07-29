@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Account.Application.Features.Orders.Commands.CheckOutOrder;
 using Account.Application.Model;
+using Account.Application.Features.AccountActivity.Commands.Withdraw;
 
 namespace Account.Application.Mapping
 {
@@ -10,6 +10,7 @@ namespace Account.Application.Mapping
         {
             //CreateMap<A, OrderVm>().ReverseMap();
             CreateMap<DepositCommand, Amount>().ReverseMap();
+            CreateMap<WithdrawCommand, Amount>().ReverseMap();
             //CreateMap<UpdateOrderCommand, AccountActivity>().ReverseMap();
         }
     }

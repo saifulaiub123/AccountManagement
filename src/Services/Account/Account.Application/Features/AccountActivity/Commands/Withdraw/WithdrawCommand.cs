@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Account.Application.Features.AccountActivity.Commands.Withdraw
 {
-    public class DepositCommand : IRequest<Unit>
+    public class WithdrawCommand : IRequest<Unit>
     {
         public int TransactionAmount { get; set; }
     }
