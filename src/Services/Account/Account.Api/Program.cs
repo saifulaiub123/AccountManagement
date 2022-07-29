@@ -17,10 +17,10 @@ namespace Account.Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            host.MigrateDatabase<OrderContext>((context, services) =>
+            host.MigrateDatabase<AccountContext>((context, services) =>
             {
-                var logger = services.GetService<ILogger<OrderContextSeed>>();
-                OrderContextSeed.SeedAsync(context, logger).Wait();
+                var logger = services.GetService<ILogger<AccountContextSeed>>();
+                AccountContextSeed.SeedAsync(context, logger).Wait();
             });
             host.Run();
         }

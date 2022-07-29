@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Account.Application.Features.Orders.Commands.CheckOutOrder;
-using Account.Application.Features.Orders.Commands.UpdateOrder;
-using Account.Application.Features.Orders.Queries.GetOrderList;
-using Account.Domain.Entities;
+using Account.Application.Model;
 
 namespace Account.Application.Mapping
 {
@@ -10,9 +8,9 @@ namespace Account.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<AccountActivity, OrderVm>().ReverseMap();
-            CreateMap<CheckOutOrderCommand, AccountActivity>().ReverseMap();
-            CreateMap<UpdateOrderCommand, AccountActivity>().ReverseMap();
+            //CreateMap<A, OrderVm>().ReverseMap();
+            CreateMap<DepositCommand, Amount>().ReverseMap();
+            //CreateMap<UpdateOrderCommand, AccountActivity>().ReverseMap();
         }
     }
 }

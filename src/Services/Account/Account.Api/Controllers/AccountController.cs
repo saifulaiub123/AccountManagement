@@ -12,9 +12,7 @@ using Account.Application.Features.Orders.Queries.GetOrderList;
 
 namespace Account.Api.Controllers
 {
-    [ApiController]
-    [Route("api/v1/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseController
     {
         private readonly IMediator _mediator;
 
@@ -32,10 +30,9 @@ namespace Account.Api.Controllers
             return Ok(orders);
         }
 
-        // testing purpose
-        [HttpPost(Name = "CheckoutOrder")]
+        [HttpPost(Name = "Deposit")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckOutOrderCommand command)
+        public async Task<ActionResult<int>> Deposit([FromBody] DepositCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

@@ -5,17 +5,17 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Account.Application.Contracts.Persistence;
 using Account.Domain.Common;
 using Account.Infrastructure.Persistence;
+using Account.Application.Contracts.Persistence.IRepository;
 
 namespace Account.Infrastructure.Repositories
 {
     public class RepositoryBase<T> : IAsyncRepository<T> where T : BaseEntity
     {
-        protected readonly OrderContext _dbContext;
+        protected readonly AccountContext _dbContext;
 
-        public RepositoryBase(OrderContext dbContext)
+        public RepositoryBase(AccountContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
