@@ -1,0 +1,32 @@
+﻿using AutoMapper;
+using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Account.Application.Contracts.Persistence.IRepository;
+using Account.Application.Contracts.Persistence.IService;
+
+namespace Account.Application.Features.AccountActivity.Queries.GetStatement
+{
+    public class GetStatementQueryHandler : IRequestHandler<GetStatementQuery, List<StatementVm>>
+    {
+        private readonly IAcountService _accountService;
+        private readonly IMapper _mapper;
+        public GetStatementQueryHandler(IAcountService accountService, IMapper mapper)
+        {
+            _accountService = accountService;
+            _mapper = mapper;
+        }
+
+        public async Task<List<StatementVm>> Handle(GetStatementQuery request, CancellationToken cancellationToken)
+        {
+            var statement = await _accountService.Statement();
+            var accountActivityEntity = _mapper.Map<List<StatementVm>>(statement);
+            
+            return accountActivityEntity;
+        }
+    }
+}

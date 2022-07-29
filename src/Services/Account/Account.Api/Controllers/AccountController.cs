@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Account.Application.Features.Orders.Commands.DeleteOrder;
-using Account.Application.Features.Orders.Queries.GetOrderList;
 using Account.Application.Features.AccountActivity.Commands.Withdraw;
+using Account.Application.Features.AccountActivity.Queries.GetStatement;
 
 namespace Account.Api.Controllers
 {
@@ -20,15 +19,6 @@ namespace Account.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{userName}", Name = "GetOrder")]
-        [ProducesResponseType(typeof(IEnumerable<OrderVm>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<OrderVm>>> GetOrdersByUserName(string userName)
-        {
-            var query = new GetOrderListQuery(userName);
-            var orders = await _mediator.Send(query);
-            return Ok(orders);
-        }
-
         [HttpPost("Deposit")]
         public async Task<ActionResult<int>> Deposit([FromBody] DepositCommand command)
         {
@@ -36,22 +26,19 @@ namespace Account.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPut(Name = "Withdraw")]
+        [HttpPost("Withdraw")]
         public async Task<ActionResult> Withdraw([FromBody] WithdrawCommand command)
         {
             await _mediator.Send(command);
-            return NoContent();
+            return Ok();
         }
 
-        [HttpDelete("{id}", Name = "DeleteOrder")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> DeleteOrder(int id)
+        [HttpGet("Statement")]
+        public async Task<ActionResult> Statement()
         {
-            var command = new DeleteOrderCommand() { Id = id };
-            await _mediator.Send(command);
-            return NoContent();
+            var command = new GetStatementQuery();
+            var result =  await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

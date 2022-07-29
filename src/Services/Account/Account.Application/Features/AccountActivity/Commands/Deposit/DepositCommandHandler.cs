@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Account.Application.Contracts.Infrastructure;
 using Account.Application.Model;
 using Account.Domain.Entities;
 using System;

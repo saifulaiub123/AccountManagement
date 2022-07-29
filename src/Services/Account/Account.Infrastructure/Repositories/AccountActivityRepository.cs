@@ -27,9 +27,9 @@ namespace Account.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task Statement()
+        public async Task<List<AccountActivity>> Statement()
         {
-            throw new NotImplementedException();
+            return await _dbContext.AccountActivity.Where(x => x.UserId == 1).OrderByDescending(x => x.CreatedDate).ToListAsync();
         }
         public async Task<AccountActivity> GetLatestActivity()
         {

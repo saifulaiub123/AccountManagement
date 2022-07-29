@@ -13,7 +13,7 @@ namespace Account.Application.Contracts.Persistence.IRepository
     {
         Task Deposit(AccountActivity accountActivity);
         Task Withdraw(AccountActivity accountActivity);
-        Task Statement();
+        Task<List<AccountActivity>> Statement();
         Task<AccountActivity> GetLatestActivity();
     }
 }

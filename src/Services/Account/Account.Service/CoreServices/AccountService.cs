@@ -54,9 +54,9 @@ namespace Account.Service.CoreServices
         }
 
 
-        public async Task Statement()
+        public async Task<List<AccountActivity>> Statement()
         {
-            throw new NotImplementedException();
+            return await _accountActivityRepository.Statement();
         }
 
         
