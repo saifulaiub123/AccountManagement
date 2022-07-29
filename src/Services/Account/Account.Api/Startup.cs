@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Account.Application;
 using Account.Infrastructure;
+using Account.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace Account.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices();
+            services.AddServices();
             services.AddInfrastructureServices(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
