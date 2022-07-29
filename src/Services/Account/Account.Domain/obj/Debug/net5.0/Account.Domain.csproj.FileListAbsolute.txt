@@ -1,0 +1,12 @@
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\bin\Debug\net5.0\Account.Domain.deps.json
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\bin\Debug\net5.0\Account.Domain.dll
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\bin\Debug\net5.0\Account.Domain.pdb
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.csproj.AssemblyReference.cache
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.GeneratedMSBuildEditorConfig.editorconfig
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.AssemblyInfoInputs.cache
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.AssemblyInfo.cs
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.csproj.CoreCompileInputs.cache
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.dll
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\refint\Account.Domain.dll
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\Account.Domain.pdb
+H:\Project\Ding\AccountManagement\src\Services\Account\Account.Domain\obj\Debug\net5.0\ref\Account.Domain.dll
