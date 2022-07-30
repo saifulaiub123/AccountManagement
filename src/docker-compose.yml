@@ -9,3 +9,10 @@ services:
 
   accountdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
+
+  account.consoleapp:
+    image: ${DOCKER_REGISTRY-}accountconsoleapp
+    build:
+      context: .
+      dockerfile: Services/Account/Account.Console/Dockerfile
+
