@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using AutoMapper;
 using Account.Application.Mapping;
 using System.Linq;
+using Account.ConsoleApp.Extentions;
+using Microsoft.Extensions.Logging;
 
 namespace Account.ConsoleApp
 {
@@ -26,6 +28,11 @@ namespace Account.ConsoleApp
         static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            host.MigrateDatabase<AccountContext>((context, services) =>
+            {
+                var logger = services.GetService<ILogger<AccountContextSeed>>();
+                AccountContextSeed.SeedAsync(context, logger).Wait();
+            });
             host.Services.GetRequiredService<Program>().Run();
         }
         private static IHostBuilder CreateHostBuilder(string[] args)

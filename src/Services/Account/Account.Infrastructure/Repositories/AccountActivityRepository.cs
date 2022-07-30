@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Account.Domain.Entities;
 using Account.Infrastructure.Persistence;
+using Account.Application.Model;
 using Account.Application.Contracts.Persistence.IRepository;
 
 namespace Account.Infrastructure.Repositories
