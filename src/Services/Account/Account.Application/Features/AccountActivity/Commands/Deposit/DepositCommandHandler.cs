@@ -2,14 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Account.Application.Model;
-using Account.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Account.Application.Contracts.Persistence.IRepository;
 using Account.Application.Contracts.Persistence.IService;
 
 namespace Account.Application.Features.AccountActivity.Commands.Withdraw

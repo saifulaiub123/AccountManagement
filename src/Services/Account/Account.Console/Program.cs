@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Account.Application.Contracts.Persistence.IService;
@@ -11,9 +10,7 @@ using Account.Infrastructure.Repositories;
 using Account.Application.Model;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-using Account.Domain.Entities;
 using System.Collections.Generic;
-using System.Reflection;
 using AutoMapper;
 using Account.Application.Mapping;
 using System.Linq;

@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Account.Application.Exceptions;
-using Account.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Account.Application.Contracts.Persistence.IRepository;
 using Account.Application.Contracts.Persistence.IService;
 using Account.Application.Model;
 

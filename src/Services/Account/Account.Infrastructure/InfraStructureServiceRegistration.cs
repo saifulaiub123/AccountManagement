@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Account.Application.Model;
 using Account.Infrastructure.Persistence;
 using Account.Infrastructure.Repositories;
 using Account.Application.Contracts.Persistence.IRepository;
