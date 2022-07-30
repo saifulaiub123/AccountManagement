@@ -1,98 +1,4 @@
-﻿//using System;
-//using Microsoft.Extensions.DependencyInjection;
-//using AutoMapper;
-//using Account.Application.Features.AccountActivity.Commands.Withdraw;
-//using Account.Application.Features.AccountActivity.Queries.GetStatement;
-//using Account.Application.Model;
-//using Account.Domain.Entities;
-//using System.Reflection;
-//using Account.Application;
-//using Account.Service;
-//using Account.Infrastructure;
-//using Microsoft.Extensions.Configuration;
-//using Account.Application.Contracts.Persistence.IService;
-//using Account.Service.CoreServices;
-//using Account.Infrastructure.Persistence;
-//using Microsoft.EntityFrameworkCore;
-//using Account.Application.Contracts.Persistence.IRepository;
-//using Account.Infrastructure.Repositories;
-
-//namespace Account.ConsoleApp
-//{
-//    public class Program
-//    {
-//        public static void Main(string[] args)
-//        {
-//            try
-//            {
-//                Console.WriteLine("Hello World!");
-//                IConfiguration Configuration = new ConfigurationBuilder()
-//                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-//                    .AddEnvironmentVariables()
-//                    .AddCommandLine(args)
-//                    .Build();
-//                ;
-
-
-
-//                RegisterServices(Configuration);
-//                //var serviceProvider = new ServiceCollection()
-//                //    .AddApplicationServices()
-//                var services = new ServiceCollection();
-
-//                //services.AddAutoMapper(Assembly.GetExecutingAssembly());
-//                //services.AddApplicationServices();
-//                //services.AddServices();
-//                //services.AddInfrastructureServices(Configuration);
-
-
-//                IServiceProvider serviceProvider = services.BuildServiceProvider();
-
-//                var accountService = serviceProvider.GetService<IAcountService>();
-
-//                accountService.Deposit(new Amount() { TransactionAmount = 500 });
-
-//                Initialize();
-//            }
-//            catch(Exception ex)
-//            {
-//                var p = ex.Message;
-//            }
-
-//        }
-//        static void Initialize()
-//        {
-//            Console.WriteLine("What");
-
-//            //AutoMapper.Mapper.CreateMap<DepositCommand, Amount>().ReverseMap();
-//            //CreateMap<WithdrawCommand, Amount>().ReverseMap();
-//            //CreateMap<StatementVm, AccountActivity>().ReverseMap();
-//        }
-
-//        private static void RegisterServices(IConfiguration Configuration)
-//        {
-
-
-//            var services = new ServiceCollection();
-//            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-//            services.AddScoped<IAcountService, AccountService>();
-
-//            services.AddDbContext<AccountContext>(options =>
-//                options.UseSqlServer(Configuration.GetConnectionString("AccountConnectionString")));
-//            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-//            services.AddScoped<IAccountActivityRepository, AccountActivityRepository>();
-
-//            IServiceProvider serviceProvider = services.BuildServiceProvider();
-//            serviceProvider = services.BuildServiceProvider(true);
-//        }
-
-
-//    }
-//}
-
-
-
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -107,12 +13,17 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Account.Domain.Entities;
 using System.Collections.Generic;
+using System.Reflection;
+using AutoMapper;
+using Account.Application.Mapping;
+using System.Linq;
 
 namespace Account.ConsoleApp
 {
     public class Program
     {
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
 
         static void Main(string[] args)
@@ -120,10 +31,29 @@ namespace Account.ConsoleApp
             var host = CreateHostBuilder(args).Build();
             host.Services.GetRequiredService<Program>().Run();
         }
-
-        public Program(IAccountService accountService)
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureServices(services =>
+                {
+                    IConfiguration Configuration = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables()
+                        .AddCommandLine(args)
+                        .Build();
+                    services.AddAutoMapper(typeof(MappingProfile));
+                    services.AddTransient<Program>();
+                    services.AddScoped<IAccountService, AccountService>();
+                    services.AddDbContext<AccountContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("AccountConnectionString")));
+                    services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
+                    services.AddScoped<IAccountActivityRepository, AccountActivityRepository>();
+                });
+        }
+        public Program(IAccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
 
         public void Run()
@@ -145,7 +75,6 @@ namespace Account.ConsoleApp
                     Console.WriteLine("Enter Amount");
                     amount = int.Parse(Console.ReadLine());
                     Task.Run(async () => await _accountService.Deposit(new Amount() { TransactionAmount = amount }));
-                    //_accountService.Deposit(new Amount() { TransactionAmount = amount }).Wait();
                     Console.WriteLine("Deposited {0}", amount);
                 }
                 else if (input == 2)
@@ -153,13 +82,13 @@ namespace Account.ConsoleApp
                     Console.WriteLine("Enter Amount");
                     amount = int.Parse(Console.ReadLine());
                     Task.Run(async () => await _accountService.Withdraw(new Amount() { TransactionAmount = amount }));
-                    //_accountService.Withdraw(new Amount() { TransactionAmount = amount }).Wait();
                     Console.WriteLine("Withdrawn {0}", amount);
                 }
                 else if (input == 3)
                 {
-                    var accountActivities = Task.Run(async () => await _accountService.Statement()).Result;
-                    ShowStatement(accountActivities);
+                    var result = Task.Run(async () => await _accountService.Statement()).Result;
+                    var statement = _mapper.Map<List<Statement>>(result);
+                    ShowStatement(statement);
                 }
                 else if (input == 4)
                 {
@@ -170,27 +99,23 @@ namespace Account.ConsoleApp
             
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args)
+       
+        private void ShowStatement(List<Statement> statements)
         {
-            return Host.CreateDefaultBuilder(args)
-                .ConfigureServices(services =>
+            if(statements.Count > 8)
+            {
+                var st = statements.First();
+                Console.WriteLine("{0}  || {1}  || {2}", nameof(st.Date), nameof(st.Amount), nameof(st.Balance));
+                foreach(var statement in statements)
                 {
-                    IConfiguration Configuration = new ConfigurationBuilder()
-                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddEnvironmentVariables()
-                        .AddCommandLine(args)
-                        .Build();
-                    services.AddTransient<Program>();
-                    services.AddScoped<IAccountService, AccountService>();
-                    services.AddDbContext<AccountContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("AccountConnectionString")));
-                    services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-                    services.AddScoped<IAccountActivityRepository, AccountActivityRepository>();
-                });
-        }
-        private void ShowStatement(List<AccountActivity> accountActivity)
-        {
-            Console.WriteLine();
+                    Console.WriteLine("{0}  || {1}  || {2}", statement.Date.ToShortDateString(), statement.Amount, statement.Balance);
+                }    
+            }
+            else
+            {
+                Console.WriteLine("No transaction found");
+            }
+            
         }
     }
 }

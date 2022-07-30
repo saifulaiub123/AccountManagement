@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Account.Application.Features.AccountActivity.Queries.GetStatement
+namespace Account.Application.Model
 {
-    public class StatementVm
+    public class Statement
     {
-        public  int Id { get; set; }
+        public int Id { get; set; }
 
         public int Amount { get; set; }
         public int Balance { get; set; }

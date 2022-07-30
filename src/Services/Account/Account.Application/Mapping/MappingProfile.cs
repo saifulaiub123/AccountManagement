@@ -12,7 +12,11 @@ namespace Account.Application.Mapping
         {
             CreateMap<DepositCommand, Amount>().ReverseMap();
             CreateMap<WithdrawCommand, Amount>().ReverseMap();
-            CreateMap<StatementVm, AccountActivity>().ReverseMap();
+            CreateMap<AccountActivity, StatementVm>().ReverseMap();
+            CreateMap<AccountActivity, Statement>()
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.TransactionAmount))
+                .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.CreatedDate));
+                
         }
     }
 }
