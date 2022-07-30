@@ -11,8 +11,6 @@ namespace Account.Application.Contracts.Persistence.IRepository
 {
     public interface IAccountActivityRepository : IAsyncRepository<AccountActivity>
     {
-        Task Deposit(AccountActivity accountActivity);
-        Task Withdraw(AccountActivity accountActivity);
         Task<List<AccountActivity>> Statement();
         Task<AccountActivity> GetLatestActivity();
     }

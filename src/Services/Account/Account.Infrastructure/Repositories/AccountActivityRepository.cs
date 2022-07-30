@@ -16,16 +16,6 @@ namespace Account.Infrastructure.Repositories
         public AccountActivityRepository(AccountContext dbContext) : base(dbContext)
         {
         }
-        public async Task Deposit(AccountActivity accountActivity)
-        {
-            await _dbContext.AddAsync(accountActivity);
-            await _dbContext.SaveChangesAsync();
-        }
-        public async Task Withdraw(AccountActivity accountActivity)
-        {
-            await _dbContext.AccountActivity.AddAsync(accountActivity);
-            await _dbContext.SaveChangesAsync();
-        }
 
         public async Task<List<AccountActivity>> Statement()
         {
@@ -33,7 +23,16 @@ namespace Account.Infrastructure.Repositories
         }
         public async Task<AccountActivity> GetLatestActivity()
         {
-            return await _dbContext.AccountActivity.Where(x => x.UserId == 1).OrderByDescending(y => y.CreatedDate).FirstOrDefaultAsync();
+            try
+            {
+                return await _dbContext.AccountActivity.Where(x => x.UserId == 1).OrderByDescending(y => y.CreatedDate).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
         }
     }
 }

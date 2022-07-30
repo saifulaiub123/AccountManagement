@@ -8,7 +8,7 @@ namespace Account.Service
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IAcountService, AccountService>();
+            services.AddScoped<IAccountService, AccountService>();
             return services;
         }
     }

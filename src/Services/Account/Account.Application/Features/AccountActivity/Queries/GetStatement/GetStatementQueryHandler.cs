@@ -13,9 +13,9 @@ namespace Account.Application.Features.AccountActivity.Queries.GetStatement
 {
     public class GetStatementQueryHandler : IRequestHandler<GetStatementQuery, List<StatementVm>>
     {
-        private readonly IAcountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
-        public GetStatementQueryHandler(IAcountService accountService, IMapper mapper)
+        public GetStatementQueryHandler(IAccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
             _mapper = mapper;

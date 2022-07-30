@@ -8,7 +8,7 @@ using Account.Domain.Entities;
 
 namespace Account.Application.Contracts.Persistence.IService
 {
-    public interface IAcountService
+    public interface IAccountService
     {
         Task Deposit(Amount amount);
         Task Withdraw(Amount amount);

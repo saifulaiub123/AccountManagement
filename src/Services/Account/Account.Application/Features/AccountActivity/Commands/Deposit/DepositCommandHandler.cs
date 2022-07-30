@@ -16,11 +16,11 @@ namespace Account.Application.Features.AccountActivity.Commands.Withdraw
 {
     public class DepositCommandHandler : IRequestHandler<DepositCommand, Unit>
     {
-        private readonly IAcountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
         private readonly ILogger<DepositCommandHandler> _logger;
 
-        public DepositCommandHandler(IAcountService accountService, IMapper mapper, ILogger<DepositCommandHandler> logger)
+        public DepositCommandHandler(IAccountService accountService, IMapper mapper, ILogger<DepositCommandHandler> logger)
         {
             _accountService = accountService;
             _mapper = mapper;

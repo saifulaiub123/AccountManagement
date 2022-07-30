@@ -17,11 +17,11 @@ namespace Account.Application.Features.AccountActivity.Commands.Withdraw
 {
     public class WithdrawCommandHandler : IRequestHandler<WithdrawCommand, Unit>
     {
-        private readonly IAcountService _accountService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
         private readonly ILogger<WithdrawCommandHandler> _logger;
 
-        public WithdrawCommandHandler(IAcountService accountService, IMapper mapper, ILogger<WithdrawCommandHandler> logger)
+        public WithdrawCommandHandler(IAccountService accountService, IMapper mapper, ILogger<WithdrawCommandHandler> logger)
         {
             _accountService = accountService;
             _mapper = mapper;

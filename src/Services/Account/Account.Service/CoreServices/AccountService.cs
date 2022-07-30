@@ -10,7 +10,7 @@ using Account.Domain.Entities;
 
 namespace Account.Service.CoreServices
 {
-    public class AccountService : IAcountService
+    public class AccountService : IAccountService
     {
         private readonly IAccountActivityRepository _accountActivityRepository;
         public AccountService(IAccountActivityRepository accountActivityRepository)
@@ -19,20 +19,28 @@ namespace Account.Service.CoreServices
         }
         public async Task Deposit(Amount amount)
         {
-            var accountActivity = new AccountActivity
+            try
             {
-                TransactionAmount = amount.TransactionAmount,
-                Balance = amount.TransactionAmount,
-                UserId = 1
-            };
-            var latestActivity = await _accountActivityRepository.GetLatestActivity();
+                var accountActivity = new AccountActivity
+                {
+                    TransactionAmount = amount.TransactionAmount,
+                    Balance = amount.TransactionAmount,
+                    UserId = 1
+                };
+                var latestActivity = await _accountActivityRepository.GetLatestActivity();
 
-            if(latestActivity != null)
-            {
-                accountActivity.Balance += latestActivity.Balance;
+                if (latestActivity != null)
+                {
+                    accountActivity.Balance += latestActivity.Balance;
+                }
+
+                await _accountActivityRepository.AddAsync(accountActivity);
             }
-            
-            await _accountActivityRepository.Deposit(accountActivity);
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task Withdraw(Amount amount)
@@ -50,7 +58,7 @@ namespace Account.Service.CoreServices
                 accountActivity.Balance = latestActivity.Balance - accountActivity.Balance;
             }
 
-            await _accountActivityRepository.Withdraw(accountActivity);
+            await _accountActivityRepository.AddAsync(accountActivity);
         }
 
 
