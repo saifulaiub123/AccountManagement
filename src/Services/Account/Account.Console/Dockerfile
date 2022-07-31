@@ -21,6 +21,4 @@ RUN dotnet publish "Account.ConsoleApp.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#ENTRYPOINT ["dotnet", "Account.ConsoleApp.dll"]
-ENTRYPOINT ["Account.ConsoleApp.exe"]
-#CMD ["Account.ConsoleApp.exe"]
+ENTRYPOINT ["dotnet", "Account.ConsoleApp.dll"]

@@ -21,12 +21,3 @@ services:
     ports:
       - "8001:80"
 
-  account.consoleapp:
-    container_name: account.consoleapp
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings__AccountConnectionString=Server=accountdb;Database=AccountDb;User Id=sa;Password=Pass@123;"
-    depends_on:
-      - accountdb
-    ports:
-      - "8002:80"
