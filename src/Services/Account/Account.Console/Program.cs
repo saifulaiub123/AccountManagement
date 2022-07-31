@@ -106,7 +106,7 @@ namespace Account.ConsoleApp
        
         private void ShowStatement(List<Statement> statements)
         {
-            if(statements.Count > 8)
+            if(statements.Count > 0)
             {
                 var st = statements.First();
                 Console.WriteLine("{0}  || {1}  || {2}", nameof(st.Date), nameof(st.Amount), nameof(st.Balance));
