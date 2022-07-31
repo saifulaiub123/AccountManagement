@@ -16,6 +16,7 @@ using Account.Application.Mapping;
 using System.Linq;
 using Account.ConsoleApp.Extentions;
 using Microsoft.Extensions.Logging;
+using Account.Application.Enum;
 
 namespace Account.ConsoleApp
 {
@@ -74,27 +75,27 @@ namespace Account.ConsoleApp
 
                 input = int.Parse(Console.ReadLine());
 
-                if (input == 1)
+                if (input == (int)InputAction.Deposit)
                 {
                     Console.WriteLine("Enter Amount");
                     amount = int.Parse(Console.ReadLine());
                     Task.Run(async () => await _accountService.Deposit(new Amount() { TransactionAmount = amount }));
                     Console.WriteLine("Deposited {0}", amount);
                 }
-                else if (input == 2)
+                else if (input == (int)InputAction.Withdraw)
                 {
                     Console.WriteLine("Enter Amount");
                     amount = int.Parse(Console.ReadLine());
                     Task.Run(async () => await _accountService.Withdraw(new Amount() { TransactionAmount = amount }));
                     Console.WriteLine("Withdrawn {0}", amount);
                 }
-                else if (input == 3)
+                else if (input == (int)InputAction.Statement)
                 {
                     var result = Task.Run(async () => await _accountService.Statement()).Result;
                     var statement = _mapper.Map<List<Statement>>(result);
                     ShowStatement(statement);
                 }
-                else if (input == 4)
+                else if (input == (int)InputAction.Exit)
                 {
                     break;
                 }
